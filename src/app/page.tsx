@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { Crown, Gift, Star, Ticket, ChevronRight, Sparkles, Lock, Shield } from 'lucide-react'
+import { Crown, Gift, Star, Ticket, ChevronRight, Sparkles, Lock, Shield, Upload } from 'lucide-react'
 
 const BENEFITS = [
   {
@@ -217,11 +217,18 @@ export default function HomePage() {
       </section>
 
       {/* Floating staff button */}
-      <a href="/admin"
-        className="fixed bottom-6 right-6 flex items-center gap-2 px-4 py-2.5 bg-white/90 backdrop-blur shadow-lg hover:shadow-xl hover:bg-white border border-gray-200 rounded-full text-sm font-medium text-gray-600 hover:text-purple-700 transition-all group z-50">
-        <Shield className="w-4 h-4 text-purple-600" />
-        員工專區
-      </a>
+      <div className="fixed bottom-6 right-6 flex flex-col items-end gap-2 z-50">
+        <a href="/migrate"
+          className="flex items-center gap-2 px-3 py-2 bg-amber-50 hover:bg-amber-100 shadow-md border border-amber-200 rounded-full text-sm font-medium text-amber-700 transition-all">
+          <Upload className="w-3.5 h-3.5" />
+          遷移舊POS
+        </a>
+        <a href="/admin"
+          className="flex items-center gap-2 px-4 py-2.5 bg-white/90 backdrop-blur shadow-lg hover:shadow-xl hover:bg-white border border-gray-200 rounded-full text-sm font-medium text-gray-600 hover:text-purple-700 transition-all">
+          <Shield className="w-4 h-4 text-purple-600" />
+          員工專區
+        </a>
+      </div>
 
       {/* Footer */}
       <footer className="bg-gray-950 text-gray-500 py-6 text-center text-sm">
