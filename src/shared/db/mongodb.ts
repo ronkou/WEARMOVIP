@@ -21,5 +21,15 @@ export async function connectDB(): Promise<Db> {
 }
 
 export const COLLECTIONS = {
+  // 會員系統集合
   MEMBERS: 'members',
+  MODULE_CONNECTORS: 'module_connectors',
+  MEMBER_EVENTS: 'member_events',
+  BALANCE_TRANSACTIONS: 'balance_transactions',
+  POINTS_RULES: 'points_rules',
+  POINTS_TRANSACTIONS: 'points_transactions',
+  COUPONS: 'coupons',
+  COUPON_INSTANCES: 'coupon_instances',
+  MARKETING_RULES: 'marketing_rules',
+  TIER_CONFIG: 'tier_config',
 } as const

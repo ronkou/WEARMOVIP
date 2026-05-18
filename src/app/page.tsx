@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Crown, Gift, Star, Ticket, ChevronRight, Sparkles, Lock, Shield, Upload } from 'lucide-react'
 
 const BENEFITS = [
@@ -56,6 +56,7 @@ const EVENTS = [
 
 export default function HomePage() {
   const benefitsRef = useRef<HTMLDivElement>(null)
+  const [eventDetail, setEventDetail] = useState<any>(null)
 
   const scrollToBenefits = () => {
     benefitsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -63,11 +64,11 @@ export default function HomePage() {
 
   const handleBecomeVip = () => {
     // 跳轉至會員登記頁面
-    window.location.href = 'https://acc.wearmo.app/members'
+    window.location.href = '/members'
   }
 
-  const handleEventDetail = (title: string) => {
-    alert(`「${title}」詳情即將公佈，請留意 WEARMO 最新消息。`)
+  const handleEventDetail = (event: any) => {
+    setEventDetail(event)
   }
 
   return (
@@ -190,7 +191,7 @@ export default function HomePage() {
                 <p className="text-sm text-gray-500">{e.desc}</p>
               </div>
               <button
-                onClick={() => handleEventDetail(e.title)}
+                onClick={() => handleEventDetail(e)}
                 className="flex-shrink-0 px-4 py-2 text-sm bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition-colors font-medium cursor-pointer"
               >
                 詳情
@@ -208,13 +209,41 @@ export default function HomePage() {
           <p className="text-gray-400 mb-8">
             在 WEARMO 消費，累積積分升級會員，解鎖更多尊貴禮遇
           </p>
-          <a href="https://acc.wearmo.app/members"
+          <a href="/members"
             className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-gray-900 font-bold rounded-full hover:from-amber-400 hover:to-amber-500 transition-all">
             前往 WEARMO 會員中心
             <ChevronRight className="w-5 h-5" />
           </a>
         </div>
       </section>
+
+      {/* Event Detail Modal */}
+      {eventDetail && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 relative">
+            <button
+              onClick={() => setEventDetail(null)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-xl"
+            >✕</button>
+            <div className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-medium ${eventDetail.tagColor} mb-3`}>
+              {eventDetail.tag}
+            </div>
+            <h3 className="text-xl font-bold text-gray-900 mb-2">{eventDetail.title}</h3>
+            <p className="text-sm text-gray-500 mb-1">📅 {eventDetail.date}</p>
+            <p className="text-sm text-gray-700 leading-relaxed mt-3">{eventDetail.desc}</p>
+            <div className="mt-6 flex gap-3">
+              <button
+                onClick={() => setEventDetail(null)}
+                className="flex-1 px-4 py-2.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium"
+              >關閉</button>
+              <button
+                onClick={() => { setEventDetail(null); alert('報名功能即將推出，請留意最新消息。') }}
+                className="flex-1 px-4 py-2.5 bg-purple-600 text-white rounded-lg hover:bg-purple-700 font-medium"
+              >立即報名</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Floating staff button */}
       <div className="fixed bottom-6 right-6 flex flex-col items-end gap-2 z-50">
