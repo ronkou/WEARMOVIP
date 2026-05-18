@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useRef } from 'react'
 import { Crown, Gift, Star, Ticket, ChevronRight, Sparkles, Lock, Shield } from 'lucide-react'
 
 const BENEFITS = [
@@ -54,11 +55,25 @@ const EVENTS = [
 ]
 
 export default function HomePage() {
+  const benefitsRef = useRef<HTMLDivElement>(null)
+
+  const scrollToBenefits = () => {
+    benefitsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  const handleBecomeVip = () => {
+    // 跳轉至會員登記頁面
+    window.location.href = 'https://acc.wearmo.app/members'
+  }
+
+  const handleEventDetail = (title: string) => {
+    alert(`「${title}」詳情即將公佈，請留意 WEARMO 最新消息。`)
+  }
+
   return (
     <div className="min-h-screen">
       {/* Hero */}
       <section className="relative overflow-hidden bg-gradient-to-br from-purple-900 via-purple-800 to-amber-600 text-white">
-        {/* Background pattern */}
         <div className="absolute inset-0 opacity-10"
           style={{
             backgroundImage: 'radial-gradient(circle at 25% 25%, #fff 1px, transparent 1px), radial-gradient(circle at 75% 75%, #fff 1px, transparent 1px)',
@@ -80,17 +95,22 @@ export default function HomePage() {
             成為 WEARMO VIP，解鎖限時折扣、優先預購、私人活動等尊貴禮遇
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <button className="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-gray-900 font-semibold rounded-full flex items-center justify-center gap-2 transition-colors">
+            <button
+              onClick={handleBecomeVip}
+              className="px-8 py-3.5 bg-amber-500 hover:bg-amber-400 text-gray-900 font-semibold rounded-full flex items-center justify-center gap-2 transition-all cursor-pointer"
+            >
               <Crown className="w-5 h-5" />
               成為 VIP 會員
             </button>
-            <button className="px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur text-white font-semibold rounded-full flex items-center justify-center gap-2 transition-colors">
+            <button
+              onClick={scrollToBenefits}
+              className="px-8 py-3.5 bg-white/10 hover:bg-white/25 backdrop-blur text-white font-semibold rounded-full flex items-center justify-center gap-2 transition-all cursor-pointer border border-white/20"
+            >
               查看專屬福利
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>
         </div>
-        {/* Bottom wave */}
         <div className="absolute bottom-0 left-0 right-0">
           <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
             <path d="M0 60L48 52C96 44 192 28 288 20C384 12 480 12 576 20C672 28 768 44 864 52C960 60 1056 60 1152 52C1248 44 1344 28 1392 20L1440 12V60H0Z" fill="#f9fafb"/>
@@ -99,7 +119,7 @@ export default function HomePage() {
       </section>
 
       {/* Benefits */}
-      <section className="max-w-5xl mx-auto px-4 py-16">
+      <section ref={benefitsRef} className="max-w-5xl mx-auto px-4 py-16">
         <div className="text-center mb-12">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">VIP 專屬四大權益</h2>
           <p className="text-gray-500">每項都是我們對 VIP 會員的承諾</p>
@@ -135,7 +155,7 @@ export default function HomePage() {
             ].map((t, i) => (
               <div key={i} className={`text-center p-6 rounded-2xl ${t.highlight ? 'bg-white/20 backdrop-blur ring-2 ring-amber-400' : 'bg-white/10'}`}>
                 <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${t.color} mx-auto mb-3 flex items-center justify-center`}>
-                  <Crown className={`w-6 h-6 ${t.highlight ? 'text-white' : 'text-white'}`} />
+                  <Crown className="w-6 h-6 text-white" />
                 </div>
                 <h3 className={`font-bold mb-1 ${t.highlight ? 'text-amber-300' : 'text-white'}`}>{t.tier}</h3>
                 <p className={`text-2xl font-bold mb-1 ${t.highlight ? 'text-white' : 'text-white/90'}`}>{t.points}</p>
@@ -169,7 +189,10 @@ export default function HomePage() {
                 </div>
                 <p className="text-sm text-gray-500">{e.desc}</p>
               </div>
-              <button className="flex-shrink-0 px-4 py-2 text-sm bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition-colors font-medium">
+              <button
+                onClick={() => handleEventDetail(e.title)}
+                className="flex-shrink-0 px-4 py-2 text-sm bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition-colors font-medium cursor-pointer"
+              >
                 詳情
               </button>
             </div>
@@ -196,7 +219,7 @@ export default function HomePage() {
       {/* Floating staff button */}
       <a href="/admin"
         className="fixed bottom-6 right-6 flex items-center gap-2 px-4 py-2.5 bg-white/90 backdrop-blur shadow-lg hover:shadow-xl hover:bg-white border border-gray-200 rounded-full text-sm font-medium text-gray-600 hover:text-purple-700 transition-all group z-50">
-        <Shield className="w-4 h-4 text-purple-600 group-hover:text-purple-700" />
+        <Shield className="w-4 h-4 text-purple-600" />
         員工專區
       </a>
 
